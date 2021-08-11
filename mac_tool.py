@@ -6,20 +6,22 @@
 
 import argparse, requests
 
-parser = argparse.ArgumentParser(description="Test MAC Address for U/L bit, also search macvendors.com for vendor")
+parser = argparse.ArgumentParser(description="Test MAC Address for U/L bit, also search MACvendors.com for vendor")
 parser.add_argument("address", metavar="address", type=str, help="MAC address to test")
 
 args = parser.parse_args()
 # Initialising hex string
-if not args.address:
-    print("type something")
-    target_byte = args.address[0:2]
+target_byte = args.address[0:2]
 
-def get_vendor_id(mac):
-    # check online for mac vendor
-    url = f"https://api.macvendors.com/{mac}"
+def get_vendor_id(MAC):
+    # check online for MAC vendor
+    url = f"https://api.MACvendors.com/{MAC}"
     re = requests.get(url)
-    return re.text
+    if re.status_code == 404:
+        result = "Not Found"
+    else:
+        result = re.text
+    return result
 
 
 def hex_to_bin(data):
@@ -36,13 +38,12 @@ print(f"Most significant byte of address {args.address} is:", target_byte)
 res = hex_to_bin(target_byte)
 
 # Print the resultant string
-print("Binary value is", str(res))
+print("Binary value of this byte is:", str(res))
 
 if str(res)[-2] == "1":
-    print("U/L bit is set (1), mac is local")
+    print("U/L bit is set (1), MAC is local")
     print("Cannot look this up, it's likely randomly generated")
 else:
-    print("U/L bit is not set (0), mac is global")
+    print("U/L bit is not set (0), MAC is global")
     vendor = get_vendor_id(args.address)
-    print(f"Vendor is {vendor}")
-
+    print(f"Vendor: {vendor}")
