@@ -1,8 +1,10 @@
 #!/usr/bin/env python
 
-# Python code to demonstrate
-# conversion of a hex string
-# to the binary string
+# mac address checker, sends request to macvendors.com,
+# checks U/L bit to see if the mac address has be altered to be
+# locally significant vs globally.
+
+# usage: ./mac_tool.py <address>
 
 import argparse, requests
 
