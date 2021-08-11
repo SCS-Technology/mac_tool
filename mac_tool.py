@@ -6,7 +6,7 @@
 
 import argparse, requests
 
-parser = argparse.ArgumentParser(description="Test MAC Address for U/L bit")
+parser = argparse.ArgumentParser(description="Test MAC Address for U/L bit, also search macvendors.com for vendor")
 parser.add_argument("address", metavar="address", type=str, help="MAC address to test")
 
 args = parser.parse_args()
